@@ -16,5 +16,11 @@ public interface EmployeeService {
 	
 	void deleteEmployee(Employee e) throws EmployeeNotFoundException;
 	
-	Employee updateEmployee(Employee e) throws EmployeeNotFoundException;
+	Employee updateEmployeeDetails(Employee e) throws EmployeeNotFoundException;
+	
+	Employee updateEmployeeAddress(Employee e) throws EmployeeNotFoundException;
+	
+	Employee updateEmployeeDepartment(Employee e) throws EmployeeNotFoundException;
+	
+	Employee updateEmployeeProject(Employee e) throws EmployeeNotFoundException;
 }

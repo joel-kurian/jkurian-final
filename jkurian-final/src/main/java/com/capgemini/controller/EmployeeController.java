@@ -47,9 +47,27 @@ public class EmployeeController {
 		es.deleteEmployee(e);
 	}
 	
-	@PutMapping("/update")
-	public Employee updateEmployee(@RequestBody Employee e) 
+	@PutMapping("/updateDetails")
+	public Employee updateEmployeeDetails(@RequestBody Employee e) 
 			throws EmployeeNotFoundException {
-		return es.updateEmployee(e);
+		return es.updateEmployeeDetails(e);
+	}
+	
+	@PutMapping("/updateProject")
+	public Employee updateEmployeeProject(@RequestBody Employee e) 
+			throws EmployeeNotFoundException {
+		return es.updateEmployeeProject(e);
+	}
+	
+	@PutMapping("/updateAddress")
+	public Employee updateEmployeeAddress(@RequestBody Employee e) 
+			throws EmployeeNotFoundException {
+		return es.updateEmployeeAddress(e);
+	}
+	
+	@PutMapping("/updateDepartment")
+	public Employee updateEmployeeDepartment(@RequestBody Employee e) 
+			throws EmployeeNotFoundException {
+		return es.updateEmployeeDepartment(e);
 	}
 }

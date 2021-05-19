@@ -44,15 +44,36 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public Employee updateEmployee(Employee e) throws EmployeeNotFoundException {
+	public Employee updateEmployeeDetails(Employee e) throws EmployeeNotFoundException {
+		Employee emp = er.findById(e.getEmpId()).orElseThrow(
+				() -> new EmployeeNotFoundException("Employee not found"));
+		emp.setName(e.getName());
+		emp.setSalary(e.getSalary());
+		emp.setTitle(e.getTitle());
+		return er.save(emp);
+	}
+
+	@Override
+	public Employee updateEmployeeAddress(Employee e) throws EmployeeNotFoundException {
 		Employee emp = er.findById(e.getEmpId()).orElseThrow(
 				() -> new EmployeeNotFoundException("Employee not found"));
 		emp.setAddr(e.getAddr());
+		return er.save(emp);
+	}
+
+	@Override
+	public Employee updateEmployeeDepartment(Employee e) throws EmployeeNotFoundException {
+		Employee emp = er.findById(e.getEmpId()).orElseThrow(
+				() -> new EmployeeNotFoundException("Employee not found"));
 		emp.setDept(e.getDept());
-		emp.setName(e.getName());
+		return er.save(emp);
+	}
+
+	@Override
+	public Employee updateEmployeeProject(Employee e) throws EmployeeNotFoundException {
+		Employee emp = er.findById(e.getEmpId()).orElseThrow(
+				() -> new EmployeeNotFoundException("Employee not found"));
 		emp.setProj(e.getProj());
-		emp.setSalary(e.getSalary());
-		emp.setTitle(e.getTitle());
 		return er.save(emp);
 	}
 

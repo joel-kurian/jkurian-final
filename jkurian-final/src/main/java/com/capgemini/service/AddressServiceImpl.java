@@ -12,7 +12,7 @@ import com.capgemini.exceptions.AddressNotFoundException;
 import com.capgemini.repo.AddressRepo;
 
 @Service
-public class AddressServiceimpl implements AddressService {
+public class AddressServiceImpl implements AddressService {
 	
 	@Autowired
 	AddressRepo ar;

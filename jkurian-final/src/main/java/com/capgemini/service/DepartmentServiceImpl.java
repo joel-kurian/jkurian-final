@@ -49,7 +49,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 				() -> new DepartmentNotFoundException("Department not found"));
 		dep.setDepDesc(d.getDepDesc());
 		dep.setDepName(d.getDepName());
-		dep.setEmpList(d.getEmpList());
+		//dep.setEmpList(d.getEmpList());
+		dep.getEmpList().clear();
+		dep.getEmpList().addAll(d.getEmpList());
 		return dr.save(dep);
 	}
 
