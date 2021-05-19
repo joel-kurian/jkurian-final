@@ -1,5 +1,6 @@
 package com.capgemini.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,8 +15,14 @@ public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int pin;
+	
+	@Column(name = "country")
 	private String country;
+	
+	@Column(name = "state")
 	private String state;
+	
+	@Column(name = "city")
 	private String city;
 	
 	public int getPin() {

@@ -2,10 +2,13 @@ package com.capgemini.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -16,10 +19,17 @@ public class Project {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int projId;
+	
+	@Column(name = "Proj_Name")
 	private String projName;
+	
+	@Column(name = "Proj_Desc")
 	private String projDesc;
 	
-	@OneToMany(targetEntity = Employee.class)
+	@OneToMany(targetEntity = Employee.class, orphanRemoval = true)
+	@JoinTable(name = "project_employee",
+			joinColumns = @JoinColumn(name = "projId"),
+			inverseJoinColumns = @JoinColumn(name = "empId"))
 	private List<Employee> empList;
 
 	public int getProjId() {

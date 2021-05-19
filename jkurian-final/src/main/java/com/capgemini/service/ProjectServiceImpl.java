@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.capgemini.entity.Project;
 import com.capgemini.exceptions.ProjectExistsException;
 import com.capgemini.exceptions.ProjectNotFoundException;
 import com.capgemini.repo.ProjectRepo;
 
+@Service
 public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired

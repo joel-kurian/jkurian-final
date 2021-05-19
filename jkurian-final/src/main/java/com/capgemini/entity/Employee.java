@@ -1,9 +1,12 @@
 package com.capgemini.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,17 +18,26 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int empId;
+	
+	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "title")
 	private String title;
+	
+	@Column(name = "salary")
 	private double salary;
 	
-	@ManyToOne
+	@ManyToOne(optional = true ,fetch = FetchType.LAZY)
+	@JoinColumn(name = "dep_id")
 	private Department dept;
 	
-	@ManyToOne
+	@ManyToOne(optional = true ,fetch = FetchType.LAZY)
+	@JoinColumn(name = "proj_id")
 	private Project proj;
 	
-	@OneToOne
+	@OneToOne(orphanRemoval = true)
+	@JoinColumn(name = "addr_pin")
 	private Address addr;
 
 	public int getEmpId() {

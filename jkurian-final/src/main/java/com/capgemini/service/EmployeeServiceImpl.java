@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.capgemini.entity.Employee;
 import com.capgemini.exceptions.EmployeeExistsException;
 import com.capgemini.exceptions.EmployeeNotFoundException;
 import com.capgemini.repo.EmployeeRepo;
 
+@Service
 public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Autowired
