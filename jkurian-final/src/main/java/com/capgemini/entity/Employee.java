@@ -1,8 +1,8 @@
 package com.capgemini.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,11 +28,11 @@ public class Employee {
 	@Column(name = "salary")
 	private double salary;
 	
-	@ManyToOne(optional = true ,fetch = FetchType.LAZY)
+	@ManyToOne(optional = true, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "dep_id")
 	private Department dept;
 	
-	@ManyToOne(optional = true ,fetch = FetchType.LAZY)
+	@ManyToOne(optional = true, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "proj_id")
 	private Project proj;
 	

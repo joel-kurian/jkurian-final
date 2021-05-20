@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.entity.Employee;
+import com.capgemini.exceptions.AddressNotFoundException;
+import com.capgemini.exceptions.DepartmentNotFoundException;
 import com.capgemini.exceptions.EmployeeExistsException;
 import com.capgemini.exceptions.EmployeeNotFoundException;
+import com.capgemini.exceptions.ProjectNotFoundException;
 import com.capgemini.service.EmployeeService;
 
 @RestController
@@ -55,19 +58,19 @@ public class EmployeeController {
 	
 	@PutMapping("/updateProject")
 	public Employee updateEmployeeProject(@RequestBody Employee e) 
-			throws EmployeeNotFoundException {
+			throws EmployeeNotFoundException, ProjectNotFoundException {
 		return es.updateEmployeeProject(e);
 	}
 	
 	@PutMapping("/updateAddress")
 	public Employee updateEmployeeAddress(@RequestBody Employee e) 
-			throws EmployeeNotFoundException {
+			throws EmployeeNotFoundException, AddressNotFoundException {
 		return es.updateEmployeeAddress(e);
 	}
 	
 	@PutMapping("/updateDepartment")
 	public Employee updateEmployeeDepartment(@RequestBody Employee e) 
-			throws EmployeeNotFoundException {
+			throws EmployeeNotFoundException, DepartmentNotFoundException {
 		return es.updateEmployeeDepartment(e);
 	}
 }

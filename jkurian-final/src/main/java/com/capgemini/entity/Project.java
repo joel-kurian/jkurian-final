@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,7 +27,7 @@ public class Project {
 	@Column(name = "Proj_Desc")
 	private String projDesc;
 	
-	@OneToMany(fetch = FetchType.EAGER, targetEntity = Employee.class, orphanRemoval = true)
+	@OneToMany(targetEntity = Employee.class, orphanRemoval = true)
 	@JoinTable(name = "project_employee",
 			joinColumns = @JoinColumn(name = "projId"),
 			inverseJoinColumns = @JoinColumn(name = "empId"))
@@ -60,9 +59,5 @@ public class Project {
 
 	public List<Employee> getEmpList() {
 		return empList;
-	}
-
-	public void setEmpList(List<Employee> empList) {
-		this.empList = empList;
 	}
 }

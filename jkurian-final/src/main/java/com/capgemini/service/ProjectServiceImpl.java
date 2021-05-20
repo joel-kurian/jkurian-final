@@ -47,7 +47,8 @@ public class ProjectServiceImpl implements ProjectService {
 	public Project updateProject(Project p) throws ProjectNotFoundException {
 		Project proj = pr.findById(p.getProjId()).orElseThrow(
 				() -> new ProjectNotFoundException("Project not found"));
-		proj.setEmpList(p.getEmpList());
+		proj.getEmpList().clear();
+		proj.getEmpList().addAll(p.getEmpList());
 		proj.setProjDesc(p.getProjDesc());
 		proj.setProjName(p.getProjName());
 		return pr.save(proj);
