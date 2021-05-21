@@ -7,15 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.capgemini.entity.Department;
+import com.capgemini.entity.Employee;
 import com.capgemini.exceptions.DepartmentExistsException;
 import com.capgemini.exceptions.DepartmentNotFoundException;
 import com.capgemini.repo.DepartmentRepo;
+import com.capgemini.repo.EmployeeRepo;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 	
 	@Autowired
 	DepartmentRepo dr;
+	
+	@Autowired
+	EmployeeRepo er;
 
 	@Override
 	public List<Department> getAllDepartments() {
@@ -38,8 +43,12 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public void deleteDepartment(Department d) throws DepartmentNotFoundException {
-		dr.findById(d.getDepId()).orElseThrow(
+		Department dep = dr.findById(d.getDepId()).orElseThrow(
 				() -> new DepartmentNotFoundException("Department not found"));
+		for (Employee e : dep.getEmpList()) {
+			e.setDept(null);
+			er.save(e);
+		}
 		dr.delete(d);
 	}
 
@@ -49,9 +58,20 @@ public class DepartmentServiceImpl implements DepartmentService {
 				() -> new DepartmentNotFoundException("Department not found"));
 		dep.setDepDesc(d.getDepDesc());
 		dep.setDepName(d.getDepName());
-		//dep.setEmpList(d.getEmpList());
+		
+		for(Employee e : dep.getEmpList()) {
+			e.setDept(null);
+			er.save(e);
+		}
+		
 		dep.getEmpList().clear();
 		dep.getEmpList().addAll(d.getEmpList());
+		
+		for (Employee e : dep.getEmpList()) {
+			e.setDept(dep);
+			er.save(e);
+		}
+		
 		return dr.save(dep);
 	}
 

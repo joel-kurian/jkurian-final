@@ -16,7 +16,8 @@ import javax.persistence.Table;
 public class Employee {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "empId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int empId;
 	
 	@Column(name = "name")
@@ -28,17 +29,17 @@ public class Employee {
 	@Column(name = "salary")
 	private double salary;
 	
-	@ManyToOne(optional = true, cascade = CascadeType.REMOVE)
+	@ManyToOne(optional = true)
 	@JoinColumn(name = "dep_id")
 	private Department dept;
 	
-	@ManyToOne(optional = true, cascade = CascadeType.REMOVE)
-	@JoinColumn(name = "proj_id")
+	@ManyToOne(optional = true)
+	@JoinColumn(name = "projId")
 	private Project proj;
 	
-	@OneToOne(orphanRemoval = true)
-	@JoinColumn(name = "addr_pin")
-	private Address addr;
+	@OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+	@JoinColumn(name = "pin")
+	private Address adr;
 
 	public int getEmpId() {
 		return empId;
@@ -89,10 +90,10 @@ public class Employee {
 	}
 
 	public Address getAddr() {
-		return addr;
+		return adr;
 	}
 
 	public void setAddr(Address addr) {
-		this.addr = addr;
+		this.adr = addr;
 	}
 }

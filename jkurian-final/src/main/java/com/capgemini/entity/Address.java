@@ -13,7 +13,8 @@ import javax.persistence.Table;
 public class Address {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "pin")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int pin;
 	
 	@Column(name = "country")

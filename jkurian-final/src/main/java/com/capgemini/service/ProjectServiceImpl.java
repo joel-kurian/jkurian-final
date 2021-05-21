@@ -6,9 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.capgemini.entity.Employee;
 import com.capgemini.entity.Project;
 import com.capgemini.exceptions.ProjectExistsException;
 import com.capgemini.exceptions.ProjectNotFoundException;
+import com.capgemini.repo.EmployeeRepo;
 import com.capgemini.repo.ProjectRepo;
 
 @Service
@@ -16,6 +18,9 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Autowired
 	ProjectRepo pr;
+	
+	@Autowired
+	EmployeeRepo er;
 
 	@Override
 	public List<Project> getAllProjects() {
@@ -38,8 +43,12 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public void deleteProject(Project p) throws ProjectNotFoundException {
-		pr.findById(p.getProjId()).orElseThrow(
+		Project proj = pr.findById(p.getProjId()).orElseThrow(
 				() -> new ProjectNotFoundException("Project not found"));
+		for (Employee e : proj.getEmpList()) {
+			e.setProj(null);
+			er.save(e);
+		}
 		pr.delete(p);
 	}
 
@@ -47,8 +56,19 @@ public class ProjectServiceImpl implements ProjectService {
 	public Project updateProject(Project p) throws ProjectNotFoundException {
 		Project proj = pr.findById(p.getProjId()).orElseThrow(
 				() -> new ProjectNotFoundException("Project not found"));
+		
+		for (Employee e : proj.getEmpList()) {
+			e.setProj(null);
+			er.save(e);
+		}
 		proj.getEmpList().clear();
 		proj.getEmpList().addAll(p.getEmpList());
+		
+		for (Employee e : proj.getEmpList()) {
+			e.setProj(proj);
+			er.save(e);
+		}
+		
 		proj.setProjDesc(p.getProjDesc());
 		proj.setProjName(p.getProjName());
 		return pr.save(proj);

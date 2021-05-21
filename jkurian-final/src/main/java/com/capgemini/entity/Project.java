@@ -1,24 +1,26 @@
 package com.capgemini.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "project")
 public class Project {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "projId")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int projId;
 	
 	@Column(name = "Proj_Name")
@@ -27,11 +29,9 @@ public class Project {
 	@Column(name = "Proj_Desc")
 	private String projDesc;
 	
-	@OneToMany(targetEntity = Employee.class, orphanRemoval = true)
-	@JoinTable(name = "project_employee",
-			joinColumns = @JoinColumn(name = "projId"),
-			inverseJoinColumns = @JoinColumn(name = "empId"))
-	private List<Employee> empList = new ArrayList<Employee>();
+	@OneToMany(mappedBy = "proj", cascade = CascadeType.ALL)
+	@JsonBackReference
+	private Set<Employee> empList = new HashSet<Employee>();
 
 	public int getProjId() {
 		return projId;
@@ -57,7 +57,11 @@ public class Project {
 		this.projDesc = projDesc;
 	}
 
-	public List<Employee> getEmpList() {
+	public Set<Employee> getEmpList() {
 		return empList;
+	}
+
+	public void setEmpList(Set<Employee> empList) {
+		this.empList = empList;
 	}
 }

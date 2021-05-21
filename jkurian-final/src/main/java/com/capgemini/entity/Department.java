@@ -1,25 +1,27 @@
 package com.capgemini.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "department")
 public class Department {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	int depId;
+	@Column(name = "dep_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	int dep_id;
 	
 	@Column(name = "Dep_Name")
 	private String depName;
@@ -27,17 +29,15 @@ public class Department {
 	@Column(name = "Dep_Desc")
 	private String depDesc;
 	
-	@OneToMany(targetEntity=Employee.class, orphanRemoval = true)
-	@JoinTable(name = "department_employee",
-		joinColumns = @JoinColumn(name = "depId"),
-		inverseJoinColumns = @JoinColumn(name = "empId"))
-	private List<Employee> empList = new ArrayList<Employee>();
+	@OneToMany(mappedBy = "dept", cascade = CascadeType.ALL)
+	@JsonBackReference
+	private Set<Employee> empList = new HashSet<Employee>();
 	
 	public int getDepId() {
-		return depId;
+		return dep_id;
 	}
 	public void setDepId(int depId) {
-		this.depId = depId;
+		this.dep_id = depId;
 	}
 	public String getDepName() {
 		return depName;
@@ -51,7 +51,10 @@ public class Department {
 	public void setDepDesc(String depDesc) {
 		this.depDesc = depDesc;
 	}
-	public List<Employee> getEmpList() {
+	public Set<Employee> getEmpList() {
 		return empList;
+	}
+	public void setEmpList(Set<Employee> empList) {
+		this.empList = empList;
 	}
 }
