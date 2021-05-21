@@ -40,7 +40,7 @@ public class EmployeeController {
 	
 	@PostMapping("/add")
 	public Employee addEmployee(@RequestBody Employee e) 
-			throws EmployeeExistsException {
+			throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		return es.addEmployee(e);
 	}
 	

@@ -15,7 +15,7 @@ public interface EmployeeService {
 	
 	Employee getEmployeeById(int id) throws EmployeeNotFoundException;
 	
-	Employee addEmployee(Employee e) throws EmployeeExistsException;
+	Employee addEmployee(Employee e) throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException;
 	
 	void deleteEmployee(Employee e) throws EmployeeNotFoundException;
 	

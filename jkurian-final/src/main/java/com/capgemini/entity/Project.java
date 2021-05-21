@@ -31,7 +31,11 @@ public class Project {
 	
 	@OneToMany(mappedBy = "proj", cascade = CascadeType.ALL)
 	@JsonBackReference
-	private Set<Employee> empList = new HashSet<Employee>();
+	private Set<Employee> empList;
+
+	public Project() {
+		empList = new HashSet<Employee>();
+	}
 
 	public int getProjId() {
 		return projId;

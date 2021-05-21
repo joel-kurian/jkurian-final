@@ -31,8 +31,11 @@ public class Department {
 	
 	@OneToMany(mappedBy = "dept", cascade = CascadeType.ALL)
 	@JsonBackReference
-	private Set<Employee> empList = new HashSet<Employee>();
+	private Set<Employee> empList;
 	
+	public Department() {
+		empList = new HashSet<Employee>();
+	}
 	public int getDepId() {
 		return dep_id;
 	}
