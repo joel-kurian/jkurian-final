@@ -56,7 +56,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("Test getAllEmployees")
-	public void testGetAllEmployees() throws EmployeeExistsException{
+	public void testGetAllEmployees() throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException{
 		List<Employee> list1 = new ArrayList<Employee>();
 		
 		for (int i = 0; i < 5; i++) {
@@ -74,14 +74,14 @@ public class EmployeeTesting {
 
 	@Test
 	@DisplayName("Test addEmployee success")
-	public void testAddEmployeeSuccess() throws EmployeeExistsException {
+	public void testAddEmployeeSuccess() throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
 		assertThat(emp).isNotNull();
 	}
 
 	@Test
 	@DisplayName("Test addEmployee failure")
-	public void testAddEmployeeFailure() {
+	public void testAddEmployeeFailure() throws DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp1 = new Employee();
 		Employee emp2 = new Employee();
 		EmployeeExistsException ex = null;
@@ -99,7 +99,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("Test getEmployeeById success")
-	public void testGetEmployeeByIdSuccess() throws EmployeeNotFoundException, EmployeeExistsException{
+	public void testGetEmployeeByIdSuccess() throws EmployeeNotFoundException, EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException{
 		Employee emp = es.addEmployee(new Employee());
 		assertThat(emp).usingRecursiveComparison()
 			.isEqualTo(es.getEmployeeById(emp.getEmpId()));
@@ -107,7 +107,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("test getEmployeeById failure")
-	public void testGetEmployeeByIdFailure() throws EmployeeExistsException{
+	public void testGetEmployeeByIdFailure() throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException{
 		Employee emp = new Employee();
 		emp = es.addEmployee(emp);
 		EmployeeNotFoundException ex = null;
@@ -121,7 +121,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("test deleteEmployee success")
-	public void testDeleteEmployeeSuccess() throws EmployeeExistsException, EmployeeNotFoundException {
+	public void testDeleteEmployeeSuccess() throws EmployeeExistsException, EmployeeNotFoundException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
 		assertThat(es.getAllEmployees().isEmpty()).isFalse();
 		
@@ -143,7 +143,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("test updateEmployee success")
-	public void testUpdateEmployeeSuccess() throws EmployeeExistsException, EmployeeNotFoundException {
+	public void testUpdateEmployeeSuccess() throws EmployeeExistsException, EmployeeNotFoundException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
 		int beginId = emp.getEmpId();
 		String s1 = emp.getName();
@@ -171,7 +171,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("test updateEmployeeProject success")
-	public void testUpdateEmployeeProjectSuccess() throws EmployeeExistsException, EmployeeNotFoundException, ProjectNotFoundException {
+	public void testUpdateEmployeeProjectSuccess() throws EmployeeExistsException, EmployeeNotFoundException, ProjectNotFoundException, DepartmentNotFoundException, AddressNotFoundException {
 		Project p1 = pr.save(new Project());
 		Employee emp = es.addEmployee(new Employee());
 		
@@ -184,7 +184,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("test updateEmployeeProject failure")
-	public void testUpdateEmployeeProjectFailure() throws EmployeeExistsException {
+	public void testUpdateEmployeeProjectFailure() throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
 		
 		ProjectNotFoundException ex = null;
@@ -198,7 +198,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("test updateEmployeeDepartment success")
-	public void testUpdateEmployeeDepartmentSuccess() throws EmployeeNotFoundException, DepartmentNotFoundException, EmployeeExistsException {
+	public void testUpdateEmployeeDepartmentSuccess() throws EmployeeNotFoundException, DepartmentNotFoundException, EmployeeExistsException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
 		assertThat(emp.getDept()).isNull();
 		
@@ -212,7 +212,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("test updateEmployeeDepartment failure")
-	public void testUpdateEmployeeDepartmentFailure() throws EmployeeExistsException {
+	public void testUpdateEmployeeDepartmentFailure() throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
 		assertThat(emp.getDept()).isNull();
 		DepartmentNotFoundException ex = null;
@@ -228,7 +228,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("test updateEmployeeAddress success")
-	public void testUpdateEmployeeAddressSuccess() throws EmployeeNotFoundException, AddressNotFoundException, EmployeeExistsException {
+	public void testUpdateEmployeeAddressSuccess() throws EmployeeNotFoundException, AddressNotFoundException, EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
 		Address adr = ar.save(new Address());
 		
@@ -239,7 +239,7 @@ public class EmployeeTesting {
 	
 	@Test
 	@DisplayName("test updateEmployeeAddress failure")
-	public void testUpdateEmployeeAddressFailure() throws EmployeeExistsException {
+	public void testUpdateEmployeeAddressFailure() throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
 		AddressNotFoundException ex = null;
 		try {

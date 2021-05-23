@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.capgemini.entity.Department;
 import com.capgemini.entity.Employee;
@@ -14,6 +15,7 @@ import com.capgemini.repo.DepartmentRepo;
 import com.capgemini.repo.EmployeeRepo;
 
 @Service
+@Transactional
 public class DepartmentServiceImpl implements DepartmentService {
 	
 	@Autowired
@@ -47,8 +49,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 				() -> new DepartmentNotFoundException("Department not found"));
 		for (Employee e : dep.getEmpList()) {
 			e.setDept(null);
-			er.save(e);
 		}
+		er.saveAll(dep.getEmpList());
 		dr.delete(d);
 	}
 
@@ -61,15 +63,17 @@ public class DepartmentServiceImpl implements DepartmentService {
 		
 		for(Employee e : dep.getEmpList()) {
 			e.setDept(null);
-			er.save(e);
 		}
+		er.saveAll(dep.getEmpList());
 		
 		dep.getEmpList().clear();
-		dep.getEmpList().addAll(d.getEmpList());
+		if (d.getEmpList() != null) {
+			dep.getEmpList().addAll(d.getEmpList());
 		
-		for (Employee e : dep.getEmpList()) {
-			e.setDept(dep);
-			er.save(e);
+			for (Employee e : dep.getEmpList()) {
+				e.setDept(dep);
+			}
+			er.saveAll(dep.getEmpList());
 		}
 		
 		return dr.save(dep);

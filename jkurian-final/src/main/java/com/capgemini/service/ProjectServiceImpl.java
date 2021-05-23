@@ -47,8 +47,8 @@ public class ProjectServiceImpl implements ProjectService {
 				() -> new ProjectNotFoundException("Project not found"));
 		for (Employee e : proj.getEmpList()) {
 			e.setProj(null);
-			er.save(e);
 		}
+		er.saveAll(proj.getEmpList());
 		pr.delete(p);
 	}
 
@@ -59,14 +59,17 @@ public class ProjectServiceImpl implements ProjectService {
 		
 		for (Employee e : proj.getEmpList()) {
 			e.setProj(null);
-			er.save(e);
 		}
-		proj.getEmpList().clear();
-		proj.getEmpList().addAll(p.getEmpList());
+		er.saveAll(proj.getEmpList());
 		
-		for (Employee e : proj.getEmpList()) {
-			e.setProj(proj);
-			er.save(e);
+		proj.getEmpList().clear();
+		if (p.getEmpList() != null) {
+			proj.getEmpList().addAll(p.getEmpList());
+		
+			for (Employee e : proj.getEmpList()) {
+				e.setProj(proj);
+			}
+			er.saveAll(proj.getEmpList());
 		}
 		
 		proj.setProjDesc(p.getProjDesc());

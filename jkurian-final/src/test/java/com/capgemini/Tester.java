@@ -30,7 +30,7 @@ public class Tester {
 	
 	@Test
 	public void test() throws Exception {
-		Department d = ds.getDepartmentById(14);
+		Department d = ds.getDepartmentById(1);
 		ds.deleteDepartment(d);
 	}
 }
