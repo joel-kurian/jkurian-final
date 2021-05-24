@@ -186,6 +186,9 @@ public class EmployeeTesting {
 	@DisplayName("test updateEmployeeProject failure")
 	public void testUpdateEmployeeProjectFailure() throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
+		Project proj = new Project();
+		proj.setProjId(-1);
+		emp.setProj(proj);
 		
 		ProjectNotFoundException ex = null;
 		try {
@@ -214,9 +217,11 @@ public class EmployeeTesting {
 	@DisplayName("test updateEmployeeDepartment failure")
 	public void testUpdateEmployeeDepartmentFailure() throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
-		assertThat(emp.getDept()).isNull();
-		DepartmentNotFoundException ex = null;
+		Department dep = new Department();
+		dep.setDepId(-1);
+		emp.setDept(dep);
 		
+		DepartmentNotFoundException ex = null;
 		try {
 			emp = es.updateEmployeeDepartment(emp);
 		} catch (EmployeeNotFoundException | DepartmentNotFoundException e) {
@@ -241,6 +246,9 @@ public class EmployeeTesting {
 	@DisplayName("test updateEmployeeAddress failure")
 	public void testUpdateEmployeeAddressFailure() throws EmployeeExistsException, DepartmentNotFoundException, ProjectNotFoundException, AddressNotFoundException {
 		Employee emp = es.addEmployee(new Employee());
+		Address adr = new Address();
+		adr.setPin(-1);
+		emp.setAddr(adr);
 		AddressNotFoundException ex = null;
 		try {
 			emp = es.updateEmployeeAddress(emp);
