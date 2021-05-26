@@ -26,7 +26,7 @@ public class Employee {
 	@Column(name = "title")
 	private String title;
 	
-	@Column(name = "salary")
+	@Column(name = "salary", columnDefinition = "double default 0")
 	private double salary;
 	
 	@ManyToOne(optional = true)
